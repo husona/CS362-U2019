@@ -25,7 +25,7 @@ int main()
 	
 	initializeGame(numPlayers, kingdom, seed, &state);
 	state.hand[0][0] = minion;	// initialize players first card to minion
-	for(i = 0; i < 5; i++) // draw a hand for player 2
+	for(i = 0; i < 5; i++) // draw a hand for player 2 (ensure that player 2 has hand >= 5)
 	{
 		drawCard(1, &state);
 	}

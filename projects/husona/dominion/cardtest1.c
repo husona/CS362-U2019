@@ -53,10 +53,10 @@ int main()
 		printf("\tFailed: player 1 has %d cards in their hand.\n", state.handCount[0]);
 	}
 	
-	printf("Test: check handCount of player 2 (should be 0):\n");
-	if(state.handCount[0] == 5)
+	printf("Test: check handCount of player 2 (should be 5):\n");
+	if(state.handCount[1] == 5)
 	{
-		printf("\tPassed: player 2 has 0 cards in hand.\n");
+		printf("\tPassed: player 2 has 5 cards in hand.\n");
 	}
 	else
 	{
