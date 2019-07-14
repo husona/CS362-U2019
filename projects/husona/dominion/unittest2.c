@@ -181,6 +181,16 @@ int main()
 	{
 		printf("\tFailed: player 3 discarded %d cards.\n", state.discardCount[2]);
 	}
+	
+	printf("Test that player 3 handCount did not change:\n");
+	if(state.handCount[2] == control.handCount[2])
+	{	
+		printf("\tPassed: player 3 handCount did not change.\n");
+	}
+	else
+	{
+		printf("\tFailed: player 3 handCOunt changed from %d to %d.\n", control.handCount[2], state.handCount[2]);
+	}
 
     return 0;
 }
