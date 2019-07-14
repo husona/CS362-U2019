@@ -25,10 +25,13 @@ int main()
 	
 	initializeGame(numPlayers, kingdom, seed, &state);
 	state.hand[0][0] = minion;	// initialize players first card to minion
-	for(i = 0; i < 5; i++) // draw a hand for player 2 (ensure that player 2 has hand >= 5)
-	{
-		drawCard(1, &state);
-	}
+	// set player 2 to have a hand of 5
+	state.hand[1][0] = curse;
+	state.hand[1][1] = curse;
+	state.hand[1][2] = curse;
+	state.hand[1][3] = curse;
+	state.hand[1][4] = curse;
+	state.handCount[1] = 5;
 	// set player 3 to have a hand less than 5
 	state.hand[2][0] = curse;
 	state.hand[2][1] = curse;
