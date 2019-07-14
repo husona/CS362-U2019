@@ -25,6 +25,10 @@ int main()
 	
 	initializeGame(numPlayers, kingdom, seed, &state);
 	// set player 1's hand to known state (all mines)
+	state.handCount[0] = 5;
+	state.handCount[1] = 5;
+	state.deckCount[0] = 10;
+	state.deckCount[1] = 10;
 	for(i = 0; i < state.handCount[0]; i++)
 	{
 		state.hand[0][i] = mine;
@@ -126,7 +130,7 @@ int main()
 		printf("\tFailed: player 2 card count changed from %d to %d.\n", _fullCardCount(&control, 1), _fullCardCount(&state, 1));
 	}
 	
-	printf("Verify player 1\'s cards did not change:\n");
+	printf("Verify player 1\'s decks cards did not change:\n");
 	if(fullDeckCount(0, mine, &state) == fullDeckCount(0, mine, &control) && fullDeckCount(0, baron, &state) == fullDeckCount(0, baron, &control))
 	{	
 		printf("\tPassed: player 1\'s cards have not changed.\n");
@@ -136,14 +140,14 @@ int main()
 		printf("\tFailed: 1 or more of of player 1\'s cards have changed.\n");
 	}
 	
-	printf("Verify player 2\'s cards did not change:\n");
+	printf("Verify player 2\'s decks cards did not change:\n");
 	if(fullDeckCount(1, mine, &state) == fullDeckCount(1, mine, &control) && fullDeckCount(1, baron, &state) == fullDeckCount(1, baron, &control))
 	{	
 		printf("\tPassed: player 2\'s cards have not changed.\n");
 	}
 	else
 	{
-		printf("\tFailed: 2 or more of of player 1\'s cards have changed.\n");
+		printf("\tFailed: 1 or more of of player 1\'s cards have changed.\n");
 	}
 	
 	printf("Verify player 2\'s old hand was discarded:\n");
