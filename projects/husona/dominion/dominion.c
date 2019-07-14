@@ -73,17 +73,13 @@ int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct 
   ///////////////////////////////
 
   //set number of Curse cards
-  if (numPlayers == 2)
+  if (numPlayers > 3)
     {
-      state->supplyCount[curse] = 10;
-    }
-  else if (numPlayers == 3)
-    {
-      state->supplyCount[curse] = 20;
+      state->supplyCount[curse] = 30;
     }
   else
     {
-      state->supplyCount[curse] = 30;
+      state->supplyCount[curse] = 10 * (numPlayers - 1);
     }
 
   //set number of Victory cards
@@ -329,7 +325,30 @@ int buyCard(int supplyPos, struct gameState *state)
 
 int numHandCards(struct gameState *state)
 {
-  return state->handCount[ whoseTurn(state) ];
+  return _numHandCards(state, state->whoseTurn);
+}
+
+int _numHandCards(struct gameState *state, int player)
+{
+	if(player < state->numPlayers)
+	{
+		return state->handCount[player];
+	}
+	return -1;
+}
+
+int fullCardCount(struct gameState* state)
+{
+	return _fullCardCount(state, state->whoseTurn);
+}
+
+int _fullCardCount(struct gameState* state, int player)
+{
+	if(player < state->numPlayers)
+	{
+		return state->handCount[player] + state->deckCount[player] + state->discardCount[player];
+	}
+	return -1;
 }
 
 int handCard(int handPos, struct gameState *state)
@@ -388,7 +407,8 @@ int endTurn(struct gameState *state)
   int currentPlayer = whoseTurn(state);
   
   //Discard hand
-  for (i = 0; i < state->handCount[currentPlayer]; i++){
+  for (i = 0; i < state->handCount[currentPlayer]; i++)
+  {
     state->discard[currentPlayer][state->discardCount[currentPlayer]++] = state->hand[currentPlayer][i];//Discard
     state->hand[currentPlayer][i] = -1;//Set card to -1
   }
@@ -1099,37 +1119,19 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
 {
 	
-  //if card is not trashed, added to Played pile 
-  if (trashFlag < 1)
-    {
-      //add card to played pile
-      state->playedCards[state->playedCardCount] = state->hand[currentPlayer][handPos]; 
-      state->playedCardCount++;
-    }
+  //if card is not trashed, added to discard pile 
+  if (trashFlag < 1)	//add card to discard pile
+  {
+	  state->discard[currentPlayer][state->discardCount[currentPlayer]] = state->hand[currentPlayer][handPos]; 
+	  state->discardCount[currentPlayer]++;
+  }
 	
-  //set played card to -1
-  state->hand[currentPlayer][handPos] = -1;
-	
-  //remove card from player's hand
-  if ( handPos == (state->handCount[currentPlayer] - 1) ) 	//last card in hand array is played
-    {
-      //reduce number of cards in hand
-      state->handCount[currentPlayer]--;
-    }
-  else if ( state->handCount[currentPlayer] == 1 ) //only one card in hand
-    {
-      //reduce number of cards in hand
-      state->handCount[currentPlayer]--;
-    }
-  else 	
-    {
-      //replace discarded card with last card in hand
-      state->hand[currentPlayer][handPos] = state->hand[currentPlayer][ (state->handCount[currentPlayer] - 1)];
-      //set last card to -1
-      state->hand[currentPlayer][state->handCount[currentPlayer] - 1] = -1;
-      //reduce number of cards in hand
-      state->handCount[currentPlayer]--;
-    }
+  //replace discarded card with last card in hand
+  state->hand[currentPlayer][handPos] = state->hand[currentPlayer][(state->handCount[currentPlayer] - 1)];
+  //set last card to -1
+  state->hand[currentPlayer][state->handCount[currentPlayer] - 1] = -1;
+  //reduce number of cards in hand
+  state->handCount[currentPlayer]--;
 	
   return 0;
 }
@@ -1226,7 +1228,7 @@ int playBaron(struct gameState* state, int handPos, int discardEstate)
 		}
 	}
 	
-	if (card_not_discarded)
+	if (card_not_discarded == 1)
 	{
 		gainCard(estate, state, 0, state->whoseTurn);
 	}		    	    
@@ -1243,12 +1245,12 @@ int playMine(struct gameState* state, int handPos, int cardToTrash, int cardToTa
 	  return -1;
 	}
 		
-    if (cardToTake > treasure_map || cardToTake < curse)
+    if (cardToTake > gold || cardToTake < copper)
 	{
 	  return -1;
 	}
 
-    if ((getCost(state->hand[state->whoseTurn][cardToTrash]) + 3) >= getCost(cardToTake))	// **intentional bug**: >= should be >
+    if ((getCost(state->hand[state->whoseTurn][cardToTrash]) + 3) >= getCost(cardToTake))	// **intentional bug**: >= should be <
 	{
 	  return -1;
 	}
@@ -1307,11 +1309,15 @@ int playTribute(struct gameState* state, int handPos)
 		  shuffle(nextPlayer,state);//Shuffle the deck
 		}
 		
-		tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
-		discardCard(state->deckCount[nextPlayer]-1, nextPlayer, state, 0);
+		tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];	// add top card from deck to the tributeReveal
+		state->discard[nextPlayer][state->discardCount[nextPlayer]-1] = tributeRevealedCards[0]; // move card to discard pile
+		state->discardCount[nextPlayer]++; // increment discard count
+		state->deckCount[nextPlayer]--;	// decrement the deck count
 		
-		tributeRevealedCards[1] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
-		discardCard(state->deckCount[nextPlayer]-1, nextPlayer, state, 0);
+		tributeRevealedCards[1] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];	// add top card from deck to the tributeReveal
+		state->discard[nextPlayer][state->discardCount[nextPlayer]-1] = tributeRevealedCards[1]; // move card to discard pile
+		state->discardCount[nextPlayer]++; // increment discard count
+		state->deckCount[nextPlayer]--;	// decrement the deck count
     }    
 		       
     if (tributeRevealedCards[0] == tributeRevealedCards[1]) //If we have a duplicate card, just drop one 
@@ -1332,7 +1338,7 @@ int playTribute(struct gameState* state, int handPos)
 		}
 		else if (tributeRevealedCards[i] > 0)	//Action Card
 		{
-			state->numActions = state->numActions + 2;
+			state->numActions += 2;
 		}
 	}
 	
@@ -1355,7 +1361,7 @@ int playAmbassador(struct gameState* state, int handPos, int cardToReturn, int n
 
     for (i = 0; i < state->handCount[state->whoseTurn] && count < numCopies; i++)
 	{
-		if (i != cardToReturn && i == state->hand[state->whoseTurn][cardToReturn])
+		if (i != cardToReturn && state->hand[state->whoseTurn][i] == state->hand[state->whoseTurn][cardToReturn])
 	    {
 	      count++;
 	    }
@@ -1386,11 +1392,12 @@ int playAmbassador(struct gameState* state, int handPos, int cardToReturn, int n
     discardCard(handPos, state->whoseTurn, state, 1);	// **intentional bug**:	discardCard(handPos, state->whoseTurn, state, 0);
 
     //trash copies of cards returned to supply
-	for (i = 0; i < state->handCount[state->whoseTurn] && numCopies >= 0; i++)
+	for (i = 0; i < state->handCount[state->whoseTurn] && numCopies > 0; i++)
 	{
 		if (state->hand[state->whoseTurn][i] == state->hand[state->whoseTurn][cardToReturn])
 		{
 			discardCard(i, state->whoseTurn, state, 1);
+			i--;
 			numCopies--;
 		}  
 	}

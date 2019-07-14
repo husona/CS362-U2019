@@ -103,14 +103,23 @@ int buyCard(int supplyPos, struct gameState *state);
 int numHandCards(struct gameState *state);
 /* How many cards current player has in hand */
 
+int _numHandCards(struct gameState *state, int player);
+/* How many cards specified player has in hand */
+
 int handCard(int handNum, struct gameState *state);
 /* enum value of indexed card in player's hand */
 
 int supplyCount(int card, struct gameState *state);
 /* How many of given card are left in supply */
 
+int fullCardCount(struct gameState* state);
+/* Total number of cards in current players hand, deck, and discard pile */
+
+int _fullCardCount(struct gameState* state, int player);
+/* Total number of cards in specified players hand, deck, and discard pile */
+
 int fullDeckCount(int player, int card, struct gameState *state);
-/* Here deck = hand + discard + deck */
+/* number of specified card in the players deck. Here deck = hand + discard + deck */
 
 int whoseTurn(struct gameState *state);
 
