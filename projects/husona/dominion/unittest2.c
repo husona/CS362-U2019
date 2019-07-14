@@ -117,13 +117,13 @@ int main()
 	}
 	
 	printf("Test that player 1 discarded 5 cards:\n");
-	if(state.discardCount[0] == 5)
+	if(state.discardCount[0] == control.discardCount[0] + 5)
 	{	
 		printf("\tPassed: player 1 discarded total of 5 cards.\n");
 	}
 	else
 	{
-		printf("\tFailed: player 1 discarded %d cards.\n", state.discardCount[0]);
+		printf("\tFailed: player 1 discardCount changed from %d to %d cards.\n", control.discardCount[0], state.discardCount[0]);
 	}
 	
 	printf("Test that the player 1 has 4 cards in hand and are all copper:\n");
