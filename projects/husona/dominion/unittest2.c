@@ -18,7 +18,7 @@ int main()
 {
     int i, j;
     int seed = 1000;
-    int numPlayers = 2;
+    int numPlayers = 3;
     int kingdom[10] = {ambassador, minion, tribute, gardens, mine, remodel, smithy, village, baron, great_hall};
 			   
     struct gameState state, control;
@@ -29,6 +29,11 @@ int main()
 	{
 		drawCard(1, &state);
 	}
+	// set player 3 to have a hand less than 5
+	state.hand[2][0] = curse;
+	state.hand[2][1] = curse;
+	state.hand[2][2] = curse;
+	state.handCount[2] = 3;
 	memcpy(&control, &state, sizeof(struct gameState)); // copy initial game state to control state
 	
 	// begin testing
@@ -163,7 +168,16 @@ int main()
 	{
 		printf("\tFailed: player 2 has %d cards in hand and %d non-copper cards.\n", i, i - j);
 	}
-
+	
+	printf("Test that player 3 discarded no cards:\n");
+	if(state.discardCount[2] == 0)
+	{	
+		printf("\tPassed: player 3 discarded no cards.\n");
+	}
+	else
+	{
+		printf("\tFailed: player 3 discarded %d cards.\n", state.discardCount[2]);
+	}
 
     return 0;
 }
