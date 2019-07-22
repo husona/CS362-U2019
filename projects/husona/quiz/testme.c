@@ -5,12 +5,12 @@
 
 char inputChar()
 {
-    return ((char)((rand() % 95) + 32));	// return a random character from ' ' (32) to '~' (126)
+    return ((char)(rand() % 256));	// return any random character 0 - 255
 }
 
 char *inputString()
 {
-	static char Alpha[5] = {'r','e','s','e','t'};	// function will randomly choose letters from this array
+	static char Alpha[5] = {'r','e','s','t','\0'};	// function will randomly choose letters from this array
 	static char myString[6] = {'\0','\0','\0','\0','\0','\0'};
 	
 	int i;
