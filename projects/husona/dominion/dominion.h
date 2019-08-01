@@ -86,7 +86,6 @@ int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
 /* Responsible for initializing all supplies, and shuffling deck and
    drawing starting hands for all players.  Check that 10 cards selected
    are in fact (different) kingdom cards, and that numPlayers is valid. 
-
 Cards not in game should initialize supply position to -1 */
 
 int shuffle(int player, struct gameState *state);
@@ -114,8 +113,6 @@ int fullDeckCount(int player, int card, struct gameState *state);
 
 int whoseTurn(struct gameState *state);
 
-int whoseNext(struct gameState* state);
-
 int endTurn(struct gameState *state);
 /* Must do phase C and advance to next player; do not advance whose turn
    if game is over */
@@ -129,17 +126,5 @@ int scoreFor(int player, struct gameState *state);
 int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 /* Set array position of each player who won (remember ties!) to
    1, others to 0 */
-   
-int playBaron(struct gameState* state, int handPos, int discardEstate);
-
-int playMine(struct gameState* state, int handPos, int cardToTrash, int cardToTake);
-
-int playTribute(struct gameState* state, int handPos);
-
-int playAmbassador(struct gameState* state, int handPos, int cardToReturn, int numCopies);
-
-int playMinion(struct gameState* state, int choice);
-
-int findCard(struct gameState* state, int cardType);
 
 #endif
