@@ -1411,5 +1411,18 @@ int updateCoins(int player, struct gameState *state, int bonus)
   return 0;
 }
 
+int findCard(struct gameState* state, int cardType)
+{
+	int i;
+	for (i = 0; i < state->handCount[state->whoseTurn]; i++)
+	{
+	  if (state->hand[state->whoseTurn][i] == cardType)
+	    {
+	      return i;
+	    }
+	}
+	return -1;
+}
+
 
 //end of dominion.c
