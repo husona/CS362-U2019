@@ -41,7 +41,7 @@ int main()
 	
 	// begin testing
 	printf("testing minion card play...\n");
-	playMinion(&state, 1);	// play minion card and choose option 1: gain 2 coin
+	ce_Minion(1, 0, &state, 0);	// play minion card and choose option 1: gain 2 coin
 	
 	printf("Test if number of actions increased by 1:\n");
 	if(state.numActions == control.numActions + 1)
@@ -104,7 +104,7 @@ int main()
 		control.deck[1][i] = copper;
 	}
 	memcpy(&state, &control, sizeof(struct gameState)); // make state into control
-	playMinion(&state, 2);	// play minion card, option 2: discard all cards and draw 4 more, all other players also discard and draw
+	ce_Minion(0,1,&state, 0);	// play minion card, option 2: discard all cards and draw 4 more, all other players also discard and draw
 	
 	printf("Test if coin remained the same:\n");
 	if(state.coins == control.coins)

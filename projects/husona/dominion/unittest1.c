@@ -30,7 +30,7 @@ int main()
 	memcpy(&control, &state, sizeof(struct gameState)); // copy initial game state to control state
 	// begin testing
 	printf("testing baron card play...\n");
-	playBaron(&state, 0, 1);	// play baron card, handpos 0, and choose option 1, discard estate
+	ce_Baron(1, &state);	// play baron card, and choose option 1, discard estate
 	
 	printf("Test if number of buys increased by 1:\n");
 	if(state.numBuys == control.numBuys + 1)
@@ -79,7 +79,7 @@ int main()
 	}
 	memcpy(&state, &control, sizeof(struct gameState)); // make state into control
 	
-	playBaron(&state, 0, 1);	// play baron card, handpos 0, and choose option 1, discard estate (should only gain an estate as doesn't have one to discard)
+	ce_Baron(1, &state);	// play baron card, and choose option 1, discard estate (should only gain an estate as doesn't have one to discard)
 	
 	printf("Test if coin remained the same:\n");
 	if(state.coins == control.coins)

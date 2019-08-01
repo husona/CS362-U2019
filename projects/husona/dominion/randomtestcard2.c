@@ -17,7 +17,7 @@ int testPlayMinion(struct gameState* post, int choice)
 	memcpy (&pre, post, sizeof(struct gameState));
 	w = pre.whoseTurn;
 	
-	r = playMinion(post, choice);
+	r = ce_Minion(choice, ((choice + 1) % 2), post, 0);
 
 	if(r != 0)
 	{

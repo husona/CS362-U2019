@@ -91,7 +91,7 @@ int main()
 	memcpy(&control, &state, sizeof(struct gameState)); // copy new game state to control state
 	// begin testing
 	printf("testing tribute card play...\n");
-	playTribute(&state, 0);
+	ce_Tribute(&state);
 	runTests(&state, &control, 2, 2, 0);
 	
 	memcpy(&state, &control, sizeof(struct gameState)); // reset game state
@@ -99,7 +99,7 @@ int main()
 	state.deck[1][state.deckCount[1]-1] = tribute;	// action card
 	state.deck[1][state.deckCount[1]-2] = tribute;	// same action card
 	memcpy(&control, &state, sizeof(struct gameState)); // copy new game state to control state
-	playTribute(&state, 0);
+	ce_Tribute(&state);
 	runTests(&state, &control, 2, 0, 0);
 	memcpy(&state, &control, sizeof(struct gameState)); // reset game state
 	
@@ -107,7 +107,7 @@ int main()
 	state.deck[1][state.deckCount[1]-1] = silver;	// treasure card
 	state.deck[1][state.deckCount[1]-2] = gold;	// different treasure card
 	memcpy(&control, &state, sizeof(struct gameState)); // copy new game state to control state
-	playTribute(&state, 0);
+	ce_Tribute(&state);
 	runTests(&state, &control, 0, 4, 0);
 	memcpy(&state, &control, sizeof(struct gameState)); // reset game state
 	
@@ -115,7 +115,7 @@ int main()
 	state.deck[1][state.deckCount[1]-1] = curse;	// curse card
 	state.deck[1][state.deckCount[1]-2] = curse;	// curse card
 	memcpy(&control, &state, sizeof(struct gameState)); // copy new game state to control state
-	playTribute(&state, 0);
+	ce_Tribute(&state);
 	runTests(&state, &control, 0, 0, 0);
 	memcpy(&state, &control, sizeof(struct gameState)); // reset game state
 	
@@ -123,7 +123,7 @@ int main()
 	state.deck[1][state.deckCount[1]-1] = province;	// victory card
 	state.deck[1][state.deckCount[1]-2] = estate;	// victory card
 	memcpy(&control, &state, sizeof(struct gameState)); // copy new game state to control state
-	playTribute(&state, 0);
+	ce_Tribute(&state);
 	runTests(&state, &control, 0, 0, 4);
 	memcpy(&state, &control, sizeof(struct gameState)); // reset game state
 	
@@ -131,7 +131,7 @@ int main()
 	state.deck[1][state.deckCount[1]-1] = tribute;	// action card
 	state.deck[1][state.deckCount[1]-2] = great_hall;	// victory card
 	memcpy(&control, &state, sizeof(struct gameState)); // copy new game state to control state
-	playTribute(&state, 0);
+	ce_Tribute(&state);
 	runTests(&state, &control, 2, 0, 2);	
 
     return 0;

@@ -34,7 +34,7 @@ int main()
 	printf("testing mine card play...\n");
 	
 	
-	i = playMine(&state, 0, 2, gold);	// attempt to buy gold with silver
+	i = ce_Mine(2, gold, &state, 0);	// attempt to buy gold with silver
 	printf("Test: attempt to buy gold using silver.\n");
 	if(i == 0)
 	{	
@@ -76,7 +76,7 @@ int main()
 	}
 	
 	memcpy(&state, &control, sizeof(struct gameState)); // reset game state to initial state
-	i = playMine(&state, 0, 1, gold);	// attempt to buy gold with copper
+	i = ce_Mine(1, gold, &state, 0);	// attempt to buy gold with copper
 	printf("Test: attempt to buy gold using copper.\n");
 	if(i == -1)
 	{	
@@ -118,7 +118,7 @@ int main()
 	}
 	
 	memcpy(&state, &control, sizeof(struct gameState)); // reset game state to initial state
-	i = playMine(&state, 0, 3, mine);	// attempt to buy a non treasure card with gold
+	i = ce_Mine(3, mine, &state, 0);	// attempt to buy a non treasure card with gold
 	printf("Test: attempt to buy non treasure card using gold.\n");
 	if(i == -1)
 	{	

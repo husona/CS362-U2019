@@ -22,7 +22,7 @@ int testPlayBaron(struct gameState* post, int handPos, int choice)
 	memcpy (&pre, post, sizeof(struct gameState));	// recopy gamestate to ensure above line did not affect state
 	w = pre.whoseTurn;
 	
-	r = playBaron(post, handPos, choice);
+	r = ce_Baron(choice, post);
 
 	if(r != 0)
 	{

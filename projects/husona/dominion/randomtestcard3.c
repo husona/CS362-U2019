@@ -20,7 +20,7 @@ int testPlayTribute(struct gameState* post, int handPos)
 	x = (pre.whoseTurn + 1) % pre.numPlayers; // get the number of the next player
 	t = pre.deckCount[x] + pre.discardCount[x];	// total number of cards in next players deck and discard piles
 	m = pre.deckCount[pre.whoseTurn] + pre.discardCount[pre.whoseTurn]; // total number of cards available for player to draw
-	r = playTribute(post, handPos);
+	r = ce_Tribute(post);
 
 	if(r != 0)
 	{

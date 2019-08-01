@@ -34,7 +34,7 @@ int main()
 	printf("testing ambassador card play...\n");
 	for(j = 1; j < 3; j++)
 	{
-		i = playAmbassador(&state, 0, 1, j);	// play Ambassador card with curse card selected and j copies to return
+		i = ce_Ambassador(1, j, &state, 0);	// play Ambassador card with curse card selected and j copies to return
 		
 		printf("Test that function returned normally:\n");
 		if(i == 0)
