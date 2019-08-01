@@ -47,17 +47,17 @@ randomtestresults: dominion.o randomtestcard1.c
 	
 unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c cardtest5.c dominion.o
 	echo "unittest1.c:" &> unittestresults.out
-	gcc -o unittest1 dominion.c rngs.c unittest1.c $(CFLAGS)
+	gcc -o unittest1 dominion.c rngs.c unittest1.c -g $(CFLAGS)
 	unittest1 >> unittestresults.out
 	gcov dominion.c -b -f >> unittestresults.out
 
 	echo "unittest2.c:" >> unittestresults.out
-	gcc -o unittest2 dominion.c rngs.c unittest2.c $(CFLAGS)
+	gcc -o unittest2 dominion.c rngs.c unittest2.c -g $(CFLAGS)
 	unittest2 >> unittestresults.out
 	gcov dominion.c -b -f >> unittestresults.out
 
 	echo "unittest3.c:" >> unittestresults.out
-	gcc -o unittest3 dominion.c rngs.c unittest3.c $(CFLAGS)
+	gcc -o unittest3 dominion.c rngs.c unittest3.c -g $(CFLAGS)
 	unittest3 >> unittestresults.out
 	gcov dominion.c -b -f >> unittestresults.out
 
@@ -67,32 +67,32 @@ unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c car
 	gcov dominion.c -b -f >> unittestresults.out
 
 	echo "unittest5.c:" >> unittestresults.out
-	gcc -o unittest5 dominion.c rngs.c unittest5.c $(CFLAGS)
+	gcc -o unittest5 dominion.c rngs.c unittest5.c -g $(CFLAGS)
 	unittest5 >> unittestresults.out
 	gcov dominion.c -b -f >> unittestresults.out
 
 	echo "cardtest1.c:" >> unittestresults.out
-	gcc -o cardtest1 dominion.c rngs.c cardtest1.c $(CFLAGS)
+	gcc -o cardtest1 dominion.c rngs.c cardtest1.c -g $(CFLAGS)
 	cardtest1 >> unittestresults.out
 	gcov dominion.c -b -f >> unittestresults.out
 
 	echo "cardtest2.c:" >> unittestresults.out
-	gcc -o cardtest2 dominion.c rngs.c cardtest2.c $(CFLAGS)
+	gcc -o cardtest2 dominion.c rngs.c cardtest2.c -g $(CFLAGS)
 	cardtest2 >> unittestresults.out
 	gcov dominion.c -b -f >> unittestresults.out
 
 	echo "cardtest3.c:" >> unittestresults.out
-	gcc -o cardtest3 dominion.c rngs.c cardtest3.c $(CFLAGS)
+	gcc -o cardtest3 dominion.c rngs.c cardtest3.c -g $(CFLAGS)
 	cardtest3 >> unittestresults.out
 	gcov dominion.c -b -f >> unittestresults.out
 
 	echo "cardtest4.c:" >> unittestresults.out
-	gcc -o cardtest4 dominion.c rngs.c cardtest4.c $(CFLAGS)
+	gcc -o cardtest4 dominion.c rngs.c cardtest4.c -g $(CFLAGS)
 	cardtest4 >> unittestresults.out
 	gcov dominion.c -b -f >> unittestresults.out
 
 	echo "cardtest5.c:" >> unittestresults.out
-	gcc -o cardtest5 dominion.c rngs.c cardtest5.c $(CFLAGS)
+	gcc -o cardtest5 dominion.c rngs.c cardtest5.c -g $(CFLAGS)
 	cardtest5 >> unittestresults.out
 	gcov dominion.c -b -f >> unittestresults.out
 
