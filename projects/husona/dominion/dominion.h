@@ -136,5 +136,9 @@ int ce_Ambassador(int choice1, int choice2, struct gameState* state, int handPos
 int ce_Tribute(struct gameState* state);
 
 int findCard(struct gameState* state, int cardType);
+
+int fullCardCount(struct gameState* state);
+
+int _fullCardCount(struct gameState* state, int player);
    
 #endif

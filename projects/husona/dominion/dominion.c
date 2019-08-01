@@ -1424,5 +1424,19 @@ int findCard(struct gameState* state, int cardType)
 	return -1;
 }
 
+int fullCardCount(struct gameState* state)
+{
+	return _fullCardCount(state, state->whoseTurn);
+}
+
+int _fullCardCount(struct gameState* state, int player)
+{
+	if(player < state->numPlayers)
+	{
+		return state->handCount[player] + state->deckCount[player] + state->discardCount[player];
+	}
+	return -1;
+}
+
 
 //end of dominion.c

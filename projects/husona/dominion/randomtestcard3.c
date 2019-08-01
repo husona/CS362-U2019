@@ -207,7 +207,7 @@ int main ()
 
 	fprintf (stdout, "Random Testing for playTribute.\n");
 
-	for (n = 0; n < 250000; n++)
+	for (n = 0; n < 2000; n++)
 	{
 		for (i = 0; i < sizeof(struct gameState); i++)
 		{
