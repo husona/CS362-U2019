@@ -142,5 +142,7 @@ int findCard(struct gameState* state, int cardType);
 int fullCardCount(struct gameState* state);
 
 int _fullCardCount(struct gameState* state, int player);
+
+int whoseNext(struct gameState* state);
    
 #endif

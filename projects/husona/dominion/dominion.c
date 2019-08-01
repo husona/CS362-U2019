@@ -1438,5 +1438,15 @@ int _fullCardCount(struct gameState* state, int player)
 	return -1;
 }
 
+int whoseNext(struct gameState* state)
+{
+	int temp = state->whoseTurn + 1;
+	if(temp >= state->numPlayers)
+	{
+		temp = 0;
+	}
+	return temp;
+}
+
 
 //end of dominion.c
