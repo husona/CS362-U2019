@@ -324,10 +324,11 @@ public class UrlValidator implements Serializable {
                 return false;
             }
         }
-
-        if (!isValidPath(urlMatcher.group(PARSE_URL_PATH))) {
-            return false;
-        }
+// AW: introduced bug for random testing
+// this causes the path to always evaluate to true, even if invalid
+//        if (!isValidPath(urlMatcher.group(PARSE_URL_PATH))) {
+//            return false;
+//        }
 
         if (!isValidQuery(urlMatcher.group(PARSE_URL_QUERY))) {
             return false;
