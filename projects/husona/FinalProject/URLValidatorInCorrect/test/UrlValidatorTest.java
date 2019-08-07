@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Random; //AW: for random testing
+
 import junit.framework.TestCase;
 
 /**
@@ -26,7 +30,8 @@ public class UrlValidatorTest extends TestCase {
 
    private final boolean printStatus = false;
    private final boolean printIndex = false;//print index that indicates current scheme,host,port,path, query test were using.
-
+   
+   
    public UrlValidatorTest(String testName) {
       super(testName);
    }
@@ -38,6 +43,91 @@ protected void setUp() {
       }
    }
 
+
+   /**
+    **
+    ** Tests for CS 362 Final Project
+ * @throws FileNotFoundException 
+    ** 
+    **/   
+   //AW: runs a test TEST_NUMBER of times. Creates a random URL from the options at the bottom of this file,
+   //checks if each item is valid or not, and asserts the expected (True if all items are valid, false if not).
+   //if any URLs fail assertions, they are printed to a file for manual inspection
+   public void testRandomTester() throws FileNotFoundException {
+	   int TEST_NUMBER = 100000;
+	   
+	   //h3t is valid according to the bottom of this file, but not to the default validator, 
+	   //so we must add it manually here
+	   String[] schemes = {"http","https","h3t","ftp"}; 
+	   UrlValidator validator = new UrlValidator(schemes);
+	   String failedTests = "";
+	   String randomUrlAsString = "";
+	   
+	   for(int i = 0; i < TEST_NUMBER; i++)
+	   {
+		   //create a random URL
+		   ResultPair[] randomUrl = createRandomURL();
+	   
+		   //the validator takes a string, so we need to concat all the randomUrl's "item"s together
+		   randomUrlAsString = "";
+		   for(int j = 0; j < 5; j++) {
+			   randomUrlAsString += randomUrl[j].item;
+		   }
+		   //if all 5 items are valid, we expect the whole URL to be valid
+		   //if any one part is not valid, then the url is not valid
+		   if(randomUrl[0].valid && randomUrl[1].valid && randomUrl[2].valid &&
+			  randomUrl[3].valid && randomUrl[4].valid )
+		   {
+				assertTrue(validator.isValid(randomUrlAsString));
+				
+			    //if all parts are true but we evaluate to false, that's an error.
+				//save the string to a logfile to see what's up.
+				if(!validator.isValid(randomUrlAsString))
+				{
+					failedTests += "Should be   valid: " + randomUrlAsString + System.lineSeparator();
+				}
+		   }
+		   else
+		   {
+			   	assertFalse(validator.isValid(randomUrlAsString));
+			   	
+			   	//if there is an invalid item and we evaluate to true, that's an error.
+				//save the string to a logfile to see what's up.
+				if(validator.isValid(randomUrlAsString))
+				{
+					failedTests += "Should be invalid: " + randomUrlAsString + System.lineSeparator();
+				}
+		   }
+	   }
+	   //save any errors to a file for further review
+	   try (PrintWriter out = new PrintWriter("testErrors.txt")) {
+		    out.println(failedTests);
+		}   
+   }
+   
+   //AW: creates a random URL from the sample lists way down at the bottom of this file
+   //a ResultPair has a string "item" with its text contents, and a bool "valid" for validity
+   //this creates a ResultPair array with 5 item-valid pairs, with each item being a part of a URL
+   public ResultPair[] createRandomURL() {
+	   Random random = new Random(); //why is everything an object? Java is weird
+	   
+	   ResultPair[] randomURL = new ResultPair[5];
+	   randomURL[0] = testUrlScheme[random.nextInt(testUrlScheme.length)];
+	   randomURL[1] = testUrlAuthority[random.nextInt(testUrlAuthority.length)];
+	   randomURL[2] = testUrlPort[random.nextInt(testUrlPort.length)];
+	   randomURL[3] = testPath[random.nextInt(testPath.length)];
+	   randomURL[4] = testUrlQuery[random.nextInt(testUrlQuery.length)];
+	   
+	   return randomURL;
+   }
+   
+   /**
+    **
+    ** End: Tests for CS 362 Final Project
+    ** 
+    **/ 
+   
+   
    public void testIsValid() {
         testIsValid(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
         setUp();
@@ -493,6 +583,13 @@ protected void setUp() {
        assertFalse(validator.isValid("http://example.com/serach?address=Main Avenue"));
        assertTrue(validator.isValid("http://example.com/serach?address=Main%20Avenue"));
        assertTrue(validator.isValid("http://example.com/serach?address=Main+Avenue"));
+   }
+   
+   public void testValidator421() {
+       UrlValidator validator = new UrlValidator();
+       assertTrue(validator.isValid("http://www.google.com"));
+       assertTrue(validator.isValid("http://www.erfworld.com"));
+       assertFalse(validator.isValid("http:/thisinnotarealur.co.au"));
    }
 
    //-------------------- Test data for creating a composite URL
