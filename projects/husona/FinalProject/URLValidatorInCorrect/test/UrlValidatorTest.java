@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.FileNotFoundException; //AW for printing to file
+import java.io.PrintWriter; //AW for printing to file
 import java.util.Random; //AW: for random testing
 
 import junit.framework.TestCase;
@@ -54,7 +54,7 @@ protected void setUp() {
    //checks if each item is valid or not, and asserts the expected (True if all items are valid, false if not).
    //if any URLs fail assertions, they are printed to a file for manual inspection
    public void testRandomTester() throws FileNotFoundException {
-	   int TEST_NUMBER = 100000;
+	   int TEST_NUMBER = 1000;
 	   
 	   //h3t is valid according to the bottom of this file, but not to the default validator, 
 	   //so we must add it manually here
@@ -78,7 +78,8 @@ protected void setUp() {
 		   if(randomUrl[0].valid && randomUrl[1].valid && randomUrl[2].valid &&
 			  randomUrl[3].valid && randomUrl[4].valid )
 		   {
-				assertTrue(validator.isValid(randomUrlAsString));
+				//assertTrue(randomUrlAsString + " should validate", validator.isValid(randomUrlAsString));
+			   //if assert is uncommented, it stops execution if something fails and doesn't save the log
 				
 			    //if all parts are true but we evaluate to false, that's an error.
 				//save the string to a logfile to see what's up.
@@ -89,7 +90,8 @@ protected void setUp() {
 		   }
 		   else
 		   {
-			   	assertFalse(validator.isValid(randomUrlAsString));
+			   	//assertFalse(randomUrlAsString + " should NOT validate", validator.isValid(randomUrlAsString));
+			 //if assert is uncommented, it stops execution if something fails and doesn't save the log
 			   	
 			   	//if there is an invalid item and we evaluate to true, that's an error.
 				//save the string to a logfile to see what's up.
@@ -102,7 +104,8 @@ protected void setUp() {
 	   //save any errors to a file for further review
 	   try (PrintWriter out = new PrintWriter("testErrors.txt")) {
 		    out.println(failedTests);
-		}   
+		} 
+	   assertEquals(failedTests, ""); //if there are any failed tests, fail the test in JUnit
    }
    
    //AW: creates a random URL from the sample lists way down at the bottom of this file
