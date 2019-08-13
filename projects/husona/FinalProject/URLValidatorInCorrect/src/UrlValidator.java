@@ -189,7 +189,8 @@ public class UrlValidator implements Serializable {
     /**
      * If no schemes are provided, default to this set.
      */
-    private static final String[] DEFAULT_SCHEMES = {"http", "https", "ftp"}; // Must be lower-case
+    // ADDED BUG, "ttp", "www", and "9" are not valid schemes
+    private static final String[] DEFAULT_SCHEMES = {"http", "https", "ftp", "ttp", "www", "9"}; // Must be lower-case
 
     /**
      * Singleton instance of this class with default schemes and options.
@@ -411,7 +412,7 @@ public class UrlValidator implements Serializable {
                 InetAddressValidator inetAddressValidator = InetAddressValidator.getInstance();
                 if (!inetAddressValidator.isValidInet4Address(hostLocation)) {
                     // isn't IPv4, so the URL is invalid
-                    return false;
+                    return true;		// ADDED BUG this should return false, not true
                 }
             }
             String port = authorityMatcher.group(PARSE_AUTHORITY_PORT);

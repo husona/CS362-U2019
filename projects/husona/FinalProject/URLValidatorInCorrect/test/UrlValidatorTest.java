@@ -49,7 +49,62 @@ protected void setUp() {
     ** Tests for CS 362 Final Project
  * @throws FileNotFoundException 
     ** 
-    **/   
+    **/
+ // added Unit test, runs through two loops, each calls 100 URLs
+ // first loop is valid URLs, the second is invalid
+ // misclassifications are passed to the console as errors
+public void testValidator111() {	   
+      BufferedReader reader;
+      UrlValidator validator = new UrlValidator();
+		try {
+			// 100 urls in this file
+			reader = new BufferedReader(new FileReader(
+					"<path to /test/goodURLs.txt>"));
+			String line = reader.readLine();
+			int goodList = 1;
+			int i = 0;
+			while (i < 100) {
+				// read next line
+				//System.out.println(line);
+				if (!validator.isValid(line))
+				{
+					goodList = 0;
+					System.out.println("ERROR: valid URL rejected: " + line);
+				}				
+				i++;
+				line = reader.readLine();
+			}
+			assertTrue(goodList == 1);
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			// 100 urls in this file
+			reader = new BufferedReader(new FileReader(
+					"<path to /test/badURLs.txt>"));
+			String line = reader.readLine();
+			int badList = 1;
+			int i = 0;
+			while (i < 100) {
+				// read next line
+				//System.out.println(line);
+				if (validator.isValid(line))
+				{
+					badList = 0;
+					System.out.println("ERROR: invalid URL accepted: " + line);
+				}				
+				i++;
+				line = reader.readLine();
+			}
+			assertTrue(badList == 1);
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+   }
+
    //AW: runs a test TEST_NUMBER of times. Creates a random URL from the options at the bottom of this file,
    //checks if each item is valid or not, and asserts the expected (True if all items are valid, false if not).
    //if any URLs fail assertions, they are printed to a file for manual inspection
