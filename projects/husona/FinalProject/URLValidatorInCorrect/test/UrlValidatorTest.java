@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException; //AW for printing to file
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter; //AW for printing to file
 import java.util.Random; //AW: for random testing
 
@@ -53,13 +56,12 @@ protected void setUp() {
  // added Unit test, runs through two loops, each calls 100 URLs
  // first loop is valid URLs, the second is invalid
  // misclassifications are passed to the console as errors
-public void testValidator111() {	   
+public void testUnitTests() {	   
       BufferedReader reader;
       UrlValidator validator = new UrlValidator();
 		try {
 			// 100 urls in this file
-			reader = new BufferedReader(new FileReader(
-					"<path to /test/goodURLs.txt>"));
+			reader = new BufferedReader(new FileReader("resources/goodURLs.txt"));
 			String line = reader.readLine();
 			int goodList = 1;
 			int i = 0;
@@ -82,8 +84,7 @@ public void testValidator111() {
 		
 		try {
 			// 100 urls in this file
-			reader = new BufferedReader(new FileReader(
-					"<path to /test/badURLs.txt>"));
+			reader = new BufferedReader(new FileReader("resources/badURLs.txt"));
 			String line = reader.readLine();
 			int badList = 1;
 			int i = 0;
